@@ -1,0 +1,55 @@
+---
+
+#- name: Install openjdk "10"
+#  dnf: name=java-openjdk.x86_64 state=present
+
+#- name: Install openjdk "10" devel
+#  dnf: name=java-openjdk-devel.x86_64 state=present
+
+- name: add group "jboss"
+  group: name={{ wildfly_user }}
+
+- name: add user "jboss"
+  user: name={{ wildfly_user }} group={{ wildfly_group }} home={{ wildfly_dir }} createhome=no
+
+- name: Download Wildfly_13
+  get_url: url=http://download.jboss.org/wildfly/{{ wildfly_version }}/{{ wildfly_package }} dest={{ wildfly_install_path }}/{{ wildfly_package }} 
+
+- name: Extract archive
+  command: chdir=/usr/share /bin/unzip {{ wildfly_install_path }}/{{ wildfly_package }} -d /opt/ creates={{ wildfly_install_path }}/{{ wildfly_final }}
+
+- name: Symlink install directory
+  file: src={{ wildfly_install_path }}/{{ wildfly_final }} path={{ wildfly_dir }} state=link
+
+- name: Create management users
+  shell: /usr/share/jboss-as/bin/add-user.sh {{ name }} {{ password }} --silent
+
+- name: Change Ownership of Wildfly installation
+  file: path={{ wildfly_dir }} owner={{ wildfly_user }} group={{ wildfly_group }} state=directory recurse=yes mode=0755
+
+- name: Copy Standalone.xml into Wildfly Configuration
+  template:
+    src:  standalone.xml
+    dest: /usr/share/jboss-as/standalone/configuration
+    mode: 0644
+
+
+    #- name: Copy wildfly script at init.d
+    #copy: src=jboss-as-standalone.sh dest=/etc/init.d/wildfly mode=0755
+
+- name: Copy wildfly service into systemd 
+  template: 
+    src: wildfly.service.j2
+    dest: /usr/lib/systemd/system/wildfly.service
+
+- name: systemd daemon reload
+  systemd: daemon_reload=yes
+
+- name: Enable wildfly at boot and start 
+  systemd:
+    name: wildfly.service
+    state: started
+    enabled: True
+
+#- name: Enabled wildfly at boot and start
+#service: name=wildfly enabled=yes state=started

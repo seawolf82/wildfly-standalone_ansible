@@ -1,0 +1,62 @@
+---
+
+- name: upgrade all packages 
+  yum:
+    name: "*"
+    state: latest
+
+- name: Install htop
+  package: 
+    name: htop
+    state: present
+
+- name: adding firewall rules for ntp service
+  command: firewall-cmd --add-service=ntp --permanent 
+
+- name: adding firewall rules for http service
+  command: firewall-cmd --add-service=http --permanent 
+
+- name: adding firewall rules for https service
+  command: firewall-cmd --add-service=https --permanent 
+
+- name: adding firewall rules for 8080/tcp 
+  command: firewall-cmd --add-port=8080/tcp --permanent 
+
+- name: adding firewall rules for 9990/tcp 
+  command: firewall-cmd --add-port=9990/tcp --permanent 
+  notify: Reloading firewalld rules
+
+- name: Ensure NTP-related packages is installed
+  package: 
+    name: ntp
+    state: present
+
+- name: Ensure tzdata package is installed (Linux).
+  package:
+    name: tzdata
+    state: present
+
+- name: Ensure rsyslog package is installed
+  package:
+    name: rsyslog
+    state: present
+
+
+- name: Ensure rsyslog is running and enabled as configured
+  service:
+    name: rsyslog
+    state: started
+    enabled: yes
+
+- name: Generate ntp.conf file
+  template:
+    src: ntp.conf.j2
+    dest: /etc/ntp.conf
+  when: ntp_manage_config 
+
+  
+- name: Ensure ntp is running and enabled as configured
+  service:
+    name: ntpd
+    state: started
+    enabled: yes

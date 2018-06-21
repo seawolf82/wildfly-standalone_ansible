@@ -1,0 +1,13 @@
+- hosts: all
+  remote_user: root
+  roles:
+    - common
+
+- hosts: wildfly-servers
+  remote_user: root
+  #become: yes # mi server se devo eseguire i comandi con un altro utente <> root
+  #become_method: sudo # mi serve se devo eseguire i comandi come sudo
+  roles:
+    - wildfly
+    - selinux
+

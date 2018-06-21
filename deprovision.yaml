@@ -1,0 +1,6 @@
+- name: Terminate running wildfly and remove all files
+  hosts: wildfly-servers
+  remote_user: root
+  roles:
+    - wildfly_uninstall
+

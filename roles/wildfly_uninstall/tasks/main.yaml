@@ -1,0 +1,32 @@
+
+- name: Stopping wildfly service
+  systemd: state=stopped name=wildfly
+  ignore_errors: True
+
+- name: Remove wildfly directory
+  file: path="{{wildfly_install_path}}"/"{{wildfly_final}}" state=absent
+
+- name: Remove wildfly13.zip
+  file: path="{{wildfly_install_path}}"/"{{wildfly_package}}" state=absent
+
+- name: Remove symlink wildfly directory
+  file: path="{{wildfly_dir}}" state=absent
+
+- name: Remove wildfly service into init.d directory
+  file: path=/etc/init.d/wildfly state=absent
+
+- name: Remove wildfly service into systemd and reloading daemon
+  file: path=/usr/lib/systemd/system/wildfly.service state=absent
+  notify: systemd reload 
+
+- name: Remove the user 'jboss'
+  user:
+    name: jboss
+    state: absent
+    remove: yes
+
+
+- name: Remove the group 'jboss'
+  group:
+    name: jboss
+    state: absent

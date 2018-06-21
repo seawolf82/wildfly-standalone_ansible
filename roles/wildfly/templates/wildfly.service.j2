@@ -1,0 +1,12 @@
+[Unit]
+Description=WildFly application server
+After=network.target
+
+[Service]
+Type=simple
+User=jboss
+Group=jboss
+ExecStart={{ wildfly_install_path }}/{{ wildfly_final }}/bin/standalone.sh
+
+[Install]
+WantedBy=multi-user.target
