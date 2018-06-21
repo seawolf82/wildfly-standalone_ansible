@@ -51,5 +51,5 @@ wildfly_log_file_maxBackupIndex: 7
 
 # Management
 name: "wildfly-admin"
-password: "consoft2018"
+password: "manage2018"
 
