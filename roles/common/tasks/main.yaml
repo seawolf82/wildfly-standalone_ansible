@@ -54,6 +54,10 @@
     dest: /etc/ntp.conf
   when: ntp_manage_config 
 
+- name: Restart ntp daemon
+  systemd:
+    name: ntpd
+    state: restarted  
   
 - name: Ensure ntp is running and enabled as configured
   service:
