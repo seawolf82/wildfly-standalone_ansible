@@ -5,8 +5,15 @@ This script install wildfly13 in standalone mode on remote machine through ansib
 
 N.B. 
 
-Oracle Jdk it is not installed. The user will have to install it through rpm package ora tar.gz ans afterwards setting JAVA_HOME
+Oracle Jdk it is not installed. The user will have to install it through rpm package or tar.gz ans afterwards setting JAVA_HOME
 
-To launch ansible script use:
+
+However this installation of wildfly is tested with Oracle Jdk 10.1
+
+To install wildfly run:
 
 ansible-playbook -vv -i hosts site.yaml
+
+To uninstall wildfly run:
+
+ansible-playbook -vv -i hosts deprovision.yaml
