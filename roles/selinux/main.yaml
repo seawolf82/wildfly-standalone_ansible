@@ -5,15 +5,19 @@
 - name: Download EPEL repository
   get_url: url=http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm dest=/tmp/epel-release-latest-7.noarch.rpm
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'" 
+  tags: epel
 
 - name: Install EPEL repo Centos/RHEL/Fedora
   command: rpm -ivh /tmp/epel-release-latest-7.noarch.rpm creates=/etc/yum.repos.d/epel.repo
   when: "ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'" 
+  tags: epel
 
 - name: Install libselinux-python
   yum: name=libselinux-python
   state: present
+  tags: selinux
 
 - name: Install libsemanage-python
   yum: name=libsemanage-python
   state: present
+  tags: selinux

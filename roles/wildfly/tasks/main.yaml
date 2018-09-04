@@ -8,30 +8,38 @@
 
 - name: add group "jboss"
   group: name={{ wildfly_user }}
+  tags: wildfly
 
 - name: add user "jboss"
   user: name={{ wildfly_user }} group={{ wildfly_group }} home={{ wildfly_dir }} createhome=no
+  tags: wildfly
 
 - name: Download Wildfly_13
   get_url: url=http://download.jboss.org/wildfly/{{ wildfly_version }}/{{ wildfly_package }} dest={{ wildfly_install_path }}/{{ wildfly_package }} 
+  tags: wildfly
 
 - name: Extract archive
   command: chdir=/usr/share /bin/unzip {{ wildfly_install_path }}/{{ wildfly_package }} -d /opt/ creates={{ wildfly_install_path }}/{{ wildfly_final }}
+  tags: wildfly
 
 - name: Symlink install directory
   file: src={{ wildfly_install_path }}/{{ wildfly_final }} path={{ wildfly_dir }} state=link
+  tags: wildfly
 
 - name: Create management users
   shell: /usr/share/jboss-as/bin/add-user.sh {{ name }} {{ password }} --silent
+  tags: wildfly
 
 - name: Change Ownership of Wildfly installation
   file: path={{ wildfly_dir }} owner={{ wildfly_user }} group={{ wildfly_group }} state=directory recurse=yes mode=0755
+  tags: wildfly
 
 - name: Copy Standalone.xml into Wildfly Configuration
   template:
     src:  standalone.xml
     dest: /usr/share/jboss-as/standalone/configuration
     mode: 0644
+  tags: wildfly
 
 
     #- name: Copy wildfly script at init.d
@@ -41,15 +49,18 @@
   template: 
     src: wildfly.service.j2
     dest: /usr/lib/systemd/system/wildfly.service
+  tags: wildfly
 
 - name: systemd daemon reload
   systemd: daemon_reload=yes
+  tags: wildfly
 
 - name: Enable wildfly at boot and start 
   systemd:
     name: wildfly.service
     state: started
     enabled: True
+  tags: wildfly
 
 #- name: Enabled wildfly at boot and start
 #service: name=wildfly enabled=yes state=started
