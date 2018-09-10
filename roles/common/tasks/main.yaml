@@ -36,7 +36,10 @@
 
 
 - name: adding firewall rules for ntp service
-  command: firewall-cmd --add-service=ntp --permanent
+  firewalld:
+    service: ntp
+    permanent: true
+    state: enabled
   notify: Reloading firewalld rules
   tags: ntp
 

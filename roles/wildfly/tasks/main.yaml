@@ -45,6 +45,22 @@
     #- name: Copy wildfly script at init.d
     #copy: src=jboss-as-standalone.sh dest=/etc/init.d/wildfly mode=0755
 
+- name: Adding port 8080/tcp for wildfly
+  firewalld:
+    port: 8080/tcp
+    permanent: true
+    state: enabled
+  tags: wildfly 
+
+
+- name: Adding port 9990/tcp for wildfly management console
+  firewalld:
+    port: 9990/tcp
+    permanent: true
+    state: enabled
+  notify: Reloading firewalld rules
+  tags: wildfly 
+
 - name: Copy wildfly service into systemd 
   template: 
     src: wildfly.service.j2

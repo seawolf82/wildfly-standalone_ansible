@@ -38,3 +38,21 @@
     name: jboss
     state: absent
   tags: wildfly
+
+
+- name: Remove port 8080/TCP for wildfly
+  firewalld:
+    port : 8080/tcp
+    permanent: true
+    state: disabled
+  tags: wildfly
+
+
+- name: Remove port 9990/TCP management console for wildfly
+  firewalld:
+    port : 9990/tcp
+    permanent: true
+    state: disabled
+  notify: Reloading firewalld rules
+  tags: wildfly
+
