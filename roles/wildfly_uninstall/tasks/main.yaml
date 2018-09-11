@@ -44,6 +44,7 @@
   firewalld:
     port : 8080/tcp
     permanent: true
+    immediate: true
     state: disabled
   tags: wildfly
 
@@ -52,7 +53,7 @@
   firewalld:
     port : 9990/tcp
     permanent: true
+    immediate: true
     state: disabled
-  notify: Reloading firewalld rules
   tags: wildfly
 

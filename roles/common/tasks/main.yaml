@@ -17,6 +17,7 @@
     - bash-completion
     - vim
     - zip
+    - unzip
     - bzip2
     - gzip
     - net-tools

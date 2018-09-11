@@ -19,9 +19,9 @@ wildfly_group: jboss
 wildfly_dir: /usr/share/jboss-as
 
 #wildfly_version
-wildfly_version: 13.0.0.Final
-wildfly_final: wildfly-13.0.0.Final
-wildfly_package: wildfly-13.0.0.Final.zip
+wildfly_version: 14.0.1.Final
+wildfly_final: wildfly-14.0.1.Final
+wildfly_package: wildfly-14.0.1.Final.zip
 
 #Files & Path
 wildfly_install_path: /opt

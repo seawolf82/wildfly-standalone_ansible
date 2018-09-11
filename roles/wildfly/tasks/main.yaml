@@ -14,12 +14,12 @@
   user: name={{ wildfly_user }} group={{ wildfly_group }} home={{ wildfly_dir }} createhome=no
   tags: wildfly
 
-- name: Download Wildfly_13
-  get_url: url=http://download.jboss.org/wildfly/{{ wildfly_version }}/{{ wildfly_package }} dest={{ wildfly_install_path }}/{{ wildfly_package }} 
-  tags: wildfly
 
-- name: Extract archive
-  command: chdir=/usr/share /bin/unzip {{ wildfly_install_path }}/{{ wildfly_package }} -d /opt/ creates={{ wildfly_install_path }}/{{ wildfly_final }}
+- name: Download and extract Wildfly
+  unarchive: 
+    src: http://download.jboss.org/wildfly/{{ wildfly_version }}/{{ wildfly_package }} 
+    dest: "{{ wildfly_install_path }}"
+    remote_src: yes
   tags: wildfly
 
 - name: Symlink install directory
@@ -49,6 +49,7 @@
   firewalld:
     port: 8080/tcp
     permanent: true
+    immediate: true
     state: enabled
   tags: wildfly 
 
@@ -57,8 +58,8 @@
   firewalld:
     port: 9990/tcp
     permanent: true
+    immediate: true
     state: enabled
-  notify: Reloading firewalld rules
   tags: wildfly 
 
 - name: Copy wildfly service into systemd 
