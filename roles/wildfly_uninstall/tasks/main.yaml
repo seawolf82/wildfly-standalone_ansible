@@ -5,11 +5,11 @@
   tags: wildfly
 
 - name: Remove wildfly directory
-  file: path="{{wildfly_install_path}}"/"{{wildfly_final}}" state=absent
+  file: path="{{wildfly_install_path}}/{{wildfly_final}}" state=absent
   tags: wildfly
 
 - name: Remove wildfly13.zip
-  file: path="{{wildfly_install_path}}"/"{{wildfly_package}}" state=absent
+  file: path="{{wildfly_install_path}}/{{wildfly_package}}" state=absent
   tags: wildfly
 
 - name: Remove symlink wildfly directory
