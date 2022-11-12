@@ -1,14 +1,15 @@
-# wildfly13-standalone_ansible
-wildfly13-standalone_ansible
+# wildfly-standalone_ansible
+wildfly-standalone_ansible
 
 This script install wildfly in standalone mode on remote machine through ansible and enabling management console to manage it
 
-N.B. 
+Tested with openjdk17 on Almalinux8-9 RockyLinux8-9
 
-Oracle Jdk it is not installed. The user will have to install it through rpm package or tar.gz and afterwards setting JAVA_HOME
+Tested with openjdk18 on Centos7
 
+Tested with:
 
-However this installation of wildfly is tested with Oracle Jdk 10.2
+- 2.9 Ansible version
 
 To install wildfly run:
 
