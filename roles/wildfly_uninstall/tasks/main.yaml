@@ -8,16 +8,12 @@
   file: path="{{wildfly_install_path}}/{{wildfly_final}}" state=absent
   tags: wildfly
 
-- name: Remove wildfly13.zip
+- name: Remove wildfly.zip
   file: path="{{wildfly_install_path}}/{{wildfly_package}}" state=absent
   tags: wildfly
 
 - name: Remove symlink wildfly directory
   file: path="{{wildfly_dir}}" state=absent
-  tags: wildfly
-
-- name: Remove wildfly service into init.d directory
-  file: path=/etc/init.d/wildfly state=absent
   tags: wildfly
 
 - name: Remove wildfly service into systemd and reloading daemon

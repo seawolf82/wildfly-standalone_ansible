@@ -19,9 +19,9 @@ wildfly_group: jboss
 wildfly_dir: /usr/share/jboss-as
 
 #wildfly_version
-wildfly_version: 26.1.2.Final
-wildfly_final: wildfly-26.1.2.Final
-wildfly_package: wildfly-26.1.2.Final.zip
+wildfly_version: 27.0.0.Final
+wildfly_final: wildfly-27.0.0.Final
+wildfly_package: wildfly-27.0.0.Final.zip
 
 #Files & Path
 wildfly_install_path: /opt
@@ -51,5 +51,5 @@ wildfly_log_file_maxBackupIndex: 7
 
 # Management
 name: "wildfly-admin"
-password: "manage2018"
+password: "manage2022"
 
